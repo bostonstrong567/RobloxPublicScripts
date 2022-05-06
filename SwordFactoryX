@@ -1,0 +1,283 @@
+--Local
+local player = game:GetService("Players").LocalPlayer
+local char = player.Character
+local human = char:WaitForChild("HumanoidRootPart")
+local humanoid = char:FindFirstChild("Humanoid")
+local base = game:GetService("Workspace"):FindFirstChild(player.Name.."'s Base")
+local Raritys = {}
+local AscendMode = {}
+_G.sword = nil
+
+--Functions
+
+for _,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    if v.Name == "Molds" then
+        v.Name = "Mold"
+    elseif v.Name == "Classes" then
+        v.Name = "Class"
+    elseif v.Name == "Qualities" then
+        v.Name = "Quality"
+    elseif v.Name == "Rarities" then
+        v.Name = "Rarity"
+    end
+end
+
+for _,v in pairs(game:GetService("ReplicatedStorage"):FindFirstChild("Rarity"):GetChildren()) do
+    if v:FindFirstChild("RarityName") then
+        table.insert(Raritys, tostring(v.RarityName.Value))
+    end
+end
+
+for _,v in pairs(base.Ascender.Screen.Gui:FindFirstChild("Menu"):GetChildren()) do
+    if v:IsA("TextButton") and v.Name ~= "Release" then
+        if v.Text:find("LOCKED") then
+            v.Name = v.Name.." Higher Level Required"
+            table.insert(AscendMode, v.Name)
+        else
+            table.insert(AscendMode, v.Name)
+        end
+    end
+end
+
+function selllowerSword()
+    local pos = human.Position
+    for _,v in pairs(player.Backpack:GetChildren()) do
+        for _,b in pairs(game:GetService("ReplicatedStorage").Rarity:GetChildren()) do
+            if b:FindFirstChild("RarityName").Value:find(_G.Item) then
+                if v.Parent ~= char and v ~= _G.sword then
+                    if _G.sword == nil then
+                    _G.sword = char:FindFirstChildWhichIsA("Tool")
+                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,5,0)
+                v.Parent = char
+                repeat task.wait(0.5)
+                    v.Parent = game:GetService("Workspace")
+                until v.Parent == game:GetService("Workspace")
+                if _G.sword or sword then
+                    humanoid:EquipTool(_G.sword or sword)
+                else
+                    task.wait(1)
+                    human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
+                end
+            end
+        end
+        end
+    end
+    end
+end
+
+function sellhigherSword()
+    local pos = human.Position
+    for _,v in pairs(player.Backpack:GetChildren()) do
+        for _,b in pairs(game:GetService("ReplicatedStorage").Rarity:GetChildren()) do
+            if b:FindFirstChild("RarityName").Value:find(_G.Item) then
+                if v.Parent ~= char and v ~= _G.sword then
+                if _G.sword == nil then
+                _G.sword = char:FindFirstChildWhichIsA("Tool")
+                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,1,0)
+                v.Parent = char
+                repeat task.wait(0.5)
+                    v.Parent = game:GetService("Workspace")
+                until v.Parent == game:GetService("Workspace")
+                if _G.sword or sword then
+                    humanoid:EquipTool(_G.sword or sword)
+                else
+                    task.wait(1)
+                    human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
+                end
+            end
+        end
+        end
+    end
+    end
+end
+
+function sellallSword()
+    local pos = human.Position
+    for _,v in pairs(player.Backpack:GetChildren()) do
+            if v.Parent ~= char and v ~= _G.sword then
+                if _G.sword == nil then
+                _G.sword = char:FindFirstChildWhichIsA("Tool")
+                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,5,0)
+                v.Parent = char
+                repeat task.wait(0.5)
+                    v.Parent = game:GetService("Workspace")
+                until v.Parent == game:GetService("Workspace")
+                if _G.sword or sword then
+                        humanoid:EquipTool(_G.sword or sword)
+                else
+                    task.wait(1)
+                    human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
+                end
+            end
+        end
+    end
+end
+
+player.Backpack.ChildAdded:Connect(function(item)
+    if _G.sellhigherSword then
+        sellhigherSword()
+    elseif _G.selllowerSword then
+        selllowerSword()
+    elseif _G.sellallSword then
+        sellallSword()
+    end
+end)
+
+
+
+function upgradeButton(Name)
+    for i,v in pairs(getconnections(Name.Purchase.MouseButton1Up)) do
+        v.Function(Name)
+    end
+end
+
+--UI
+local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/bostonstrong567/MercuryEdited/main/MercuryNew.lua"))()
+
+local GUI = Mercury:Create{
+    Name = "Mercury",
+    Size = UDim2.fromOffset(600, 400),
+    Theme = Mercury.Themes.Dark,
+    Link = "https://discord.com/Boston's-Scripts/"
+}
+
+local Character_Enchancements = GUI:Tab{
+	Name = "Character Enchancements",
+	Icon = "rbxthumb://type=AvatarHeadShot&id="..player.UserId.."&w=100&h=100"
+}
+
+local Game_Enchancements = GUI:Tab{
+	Name = "Game Enchancements",
+	Icon = "rbxassetid://9523639753"
+}
+
+local Game_Upgrade_Enchancements = GUI:Tab{
+	Name = "Upgrade Enchancements",
+	Icon = "rbxassetid://9537486558"
+}
+
+local Game_Ascender_Enchancements = GUI:Tab{
+	Name = "Ascender Enchancements",
+	Icon = "rbxassetid://9537486558"
+}
+
+for _,v in pairs(game:GetService("Players").bostonstrong765.PlayerGui.MainGui.Upgrades:GetChildren()) do
+    if v:IsA("Frame") then
+        Game_Upgrade_Enchancements:Toggle{
+	    Name = "Auto upgrade "..v.Name,
+	    StartingState = false,
+	    Description = "Auto upgrades "..v.Name,
+	    Callback = function(toggle)
+            _G.autoUpgrade = toggle
+            while _G.autoUpgrade == true do
+                    upgradeButton(v)
+                    GUI:set_status("Status | Upgrading "..v.Name)
+                    task.wait(0.3)
+            end
+            GUI:set_status("Status | Idle")
+        end
+        }
+    end
+end
+
+Game_Ascender_Enchancements:Dropdown{
+	Name = "Auto Ascend",
+	StartingText = "Ascender Mode...",
+	Description = "Select the ascender mode",
+	Items = AscendMode,
+	Callback = function(item)
+        _G.AscendMode = item
+        game:GetService("ReplicatedStorage").Events.Ascender_Event:FireServer("Upgrade",_G.AscendMode)
+        if _G.AscendMode ~= "Relese" then
+            GUI:set_status("Status | Upgrading ".._G.AscendMode)
+        end
+        GUI:set_status("Status | Idle")
+    end
+}
+
+Game_Ascender_Enchancements:Button{
+	Name = "Stop Ascender",
+	Description = "Realese from ascender",
+	Callback = function() 
+        game:GetService("ReplicatedStorage").Events.Ascender_Event:FireServer("Cancel","Release")
+    end
+}
+
+Character_Enchancements:Slider{
+	Name = "Speed",
+	Default = 16,
+	Min = 16,
+	Max = 23,
+	Callback = function(toggle) 
+	    local humanoid = player.Character:WaitForChild("Humanoid")
+	    humanoid.WalkSpeed = toggle
+        GUI:set_status("Status | Speed Set: "..toggle)
+	end
+}
+
+Character_Enchancements:Slider{
+	Name = "Jump",
+	Default = 50,
+	Min = 50,
+	Max = 100,
+	Callback = function(toggle) 
+	    local humanoid = player.Character:WaitForChild("Humanoid")
+	    humanoid.JumpPower = toggle
+        GUI:set_status("Status | Jump Set: "..toggle)
+	end
+}
+
+Game_Enchancements:Dropdown{
+	Name = "Rarity",
+	StartingText = "Rarity...",
+	Description = "Selected Rarity",
+	Items = Raritys,
+	Callback = function(item)
+        _G.Item = item
+    end
+}
+
+Game_Enchancements:Toggle{
+	Name = "Toggle Sell Swords Above Selected Rarity",
+	StartingState = false,
+	Description = "Collects and sells Selected Rarity and above",
+	Callback = function(toggle)
+        _G.sellhigherSword = toggle
+        if _G.sellhigherSword and _G.Item ~= nil then
+            GUI:set_status("Status | Selling Swords Above ".._G.Item.." Rarity")
+            sellhigherSword()
+        else
+	        GUI:set_status("Status | Idle")
+    end
+end
+}
+
+Game_Enchancements:Toggle{
+	Name = "Toggle Sell Swords Below Selected Rarity",
+	StartingState = false,
+	Description = "Collects and sells Selected Rarity and below",
+	Callback = function(toggle)
+        _G.selllowerSword = toggle
+        if _G.selllowerSword and _G.Item ~= nil then
+            GUI:set_status("Status | Selling Swords Below ".._G.Item.." Rarity")
+            selllowerSword()
+        else
+	        GUI:set_status("Status | Idle")
+    end
+end
+}
+
+Game_Enchancements:Toggle{
+	Name = "Toggle Sell all Swords",
+	StartingState = false,
+	Description = "Collects and sells all swords",
+	Callback = function(toggle)
+        _G.sellallSword = toggle
+        if _G.sellallSword then
+            GUI:set_status("Status | Selling all rarity Swords")
+            sellallSword()
+        else
+	        GUI:set_status("Status | Idle")
+    end
+end
+}
