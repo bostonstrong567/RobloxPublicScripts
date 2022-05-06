@@ -44,25 +44,24 @@ function selllowerSword()
     for _,v in pairs(player.Backpack:GetChildren()) do
         for _,b in pairs(game:GetService("ReplicatedStorage").Rarity:GetChildren()) do
             if b:FindFirstChild("RarityName").Value:find(_G.Item) then
-                if v.Parent ~= char and v ~= _G.sword then
-                    if _G.sword == nil then
-                    _G.sword = char:FindFirstChildWhichIsA("Tool")
-                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,5,0)
-                v.Parent = char
-                repeat task.wait(0.5)
-                    v.Parent = game:GetService("Workspace")
-                until v.Parent == game:GetService("Workspace")
-                if _G.sword or sword then
-                    humanoid:EquipTool(_G.sword or sword)
+                if v ~= _G.sword and _G.sword == nil then
+                    _G.sword = char:FindFirstChildWhichIsA("Tool") or player.Backpack:GetChildren()[1]
                 else
-                    task.wait(1)
+                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,1,0)
+                repeat task.wait(0.07) humanoid:EquipTool(v) until v.Parent == char
+                if v.Parent == char and v ~= _G.sword then
+                    game:GetService("ReplicatedStorage").Framework.RemoteEvent:FireServer("BackpackServer","Drop",{})
+                    v.Parent = game:GetService("Workspace")
+                if _G.sword then
+                    humanoid:EquipTool(_G.sword or player.Backpack:GetChildren()[1])
+                    task.wait(0.07)
                     human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
-                end
             end
         end
         end
     end
     end
+end
 end
 
 function sellhigherSword()
@@ -70,42 +69,40 @@ function sellhigherSword()
     for _,v in pairs(player.Backpack:GetChildren()) do
         for _,b in pairs(game:GetService("ReplicatedStorage").Rarity:GetChildren()) do
             if b:FindFirstChild("RarityName").Value:find(_G.Item) then
-                if v.Parent ~= char and v ~= _G.sword then
-                if _G.sword == nil then
-                _G.sword = char:FindFirstChildWhichIsA("Tool")
-                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,1,0)
-                v.Parent = char
-                repeat task.wait(0.5)
-                    v.Parent = game:GetService("Workspace")
-                until v.Parent == game:GetService("Workspace")
-                if _G.sword or sword then
-                    humanoid:EquipTool(_G.sword or sword)
+                if v ~= _G.sword and _G.sword == nil then
+                    _G.sword = char:FindFirstChildWhichIsA("Tool") or player.Backpack:GetChildren()[1]
                 else
-                    task.wait(1)
+                human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,1,0)
+                repeat task.wait(0.07) humanoid:EquipTool(v) until v.Parent == char
+                if v.Parent == char and v ~= _G.sword then
+                    game:GetService("ReplicatedStorage").Framework.RemoteEvent:FireServer("BackpackServer","Drop",{})
+                    v.Parent = game:GetService("Workspace")
+                if _G.sword then
+                    humanoid:EquipTool(_G.sword or player.Backpack:GetChildren()[1])
+                    task.wait(0.07)
                     human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
-                end
             end
         end
         end
     end
     end
 end
+end
 
 function sellallSword()
     local pos = human.Position
     for _,v in pairs(player.Backpack:GetChildren()) do
-            if v.Parent ~= char and v ~= _G.sword then
-                if _G.sword == nil then
-                _G.sword = char:FindFirstChildWhichIsA("Tool")
+            if v ~= _G.sword and _G.sword == nil then
+                _G.sword = char:FindFirstChildWhichIsA("Tool") or player.Backpack:GetChildren()[1]
+            else
                 human.CFrame = base.SellStation.Base.CFrame + Vector3.new(0,5,0)
-                v.Parent = char
-                repeat task.wait(0.5)
+                repeat task.wait(0.07) humanoid:EquipTool(v) until v.Parent == char
+                if v.Parent == char and v ~= _G.sword then
+                    game:GetService("ReplicatedStorage").Framework.RemoteEvent:FireServer("BackpackServer","Drop",{})
                     v.Parent = game:GetService("Workspace")
-                until v.Parent == game:GetService("Workspace")
-                if _G.sword or sword then
-                        humanoid:EquipTool(_G.sword or sword)
-                else
-                    task.wait(1)
+                if _G.sword then
+                    humanoid:EquipTool(_G.sword or player.Backpack:GetChildren()[1])
+                    task.wait(0.07)
                     human.CFrame = CFrame.new(pos) + Vector3.new(0,1,0)
                 end
             end
@@ -114,16 +111,27 @@ function sellallSword()
 end
 
 player.Backpack.ChildAdded:Connect(function(item)
-    if _G.sellhigherSword then
+    if _G.sellhigherSword and item ~= _G.sword then
         sellhigherSword()
-    elseif _G.selllowerSword then
+    elseif _G.selllowerSword and item ~= _G.sword then
         selllowerSword()
-    elseif _G.sellallSword then
+    elseif _G.sellallSword and item ~= _G.sword then
         sellallSword()
     end
 end)
 
-
+char.ChildAdded:Connect(function(item)
+    if _G.sword == nil then
+        _G.sword = char:FindFirstChildWhichIsA("Tool") or player.Backpack:GetChildren()[1] or char:WaitForChild("Tool")
+    end
+    if _G.sellhigherSword and item ~= _G.sword then
+        sellhigherSword()
+    elseif _G.selllowerSword and item ~= _G.sword then
+        selllowerSword()
+    elseif _G.sellallSword and item ~= _G.sword then
+        sellallSword()
+    end
+end)
 
 function upgradeButton(Name)
     for i,v in pairs(getconnections(Name.Purchase.MouseButton1Up)) do
