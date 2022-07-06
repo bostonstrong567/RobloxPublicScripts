@@ -7,7 +7,7 @@ git.ItemName = Instance.new("TextLabel")
 git.ItemCorner = Instance.new("UICorner")
 
 git.FloatItemValue.Name = "FloatItemValue"
-git.FloatItemValue.Parent = nil
+git.FloatItemValue.Parent = game:GetService("Workspace")
 git.FloatItemValue.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 git.FloatItemValue.Active = true
 git.FloatItemValue.AlwaysOnTop = true
