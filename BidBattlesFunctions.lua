@@ -34,8 +34,8 @@ git.ItemName.TextScaled = true
 git.ItemName.TextSize = 30.000
 git.ItemName.TextWrapped = true
 
-return git
-
 git.ItemCorner.CornerRadius = UDim.new(0, 4)
 git.ItemCorner.Name = "ItemCorner"
 git.ItemCorner.Parent = ItemFrame
+
+return git
