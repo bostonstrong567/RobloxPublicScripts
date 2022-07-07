@@ -39,9 +39,9 @@ git.ItemCorner.Name = "ItemCorner"
 git.ItemCorner.Parent = git.ItemFrame
 
 game:GetService("ReplicatedStorage").Events.Auctions.UpdateCurrentBid.OnClientEvent:Connect(function(amount)
-    getgenv().NextBid = amount.nextBid
+    getgenv().NextBid = amount
 end)
 
-git.NextBid = getgenv().NextBid
+git.NextBid = getgenv().NextBid.nextBid
 
 return git
