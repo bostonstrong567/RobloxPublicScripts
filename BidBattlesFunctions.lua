@@ -38,4 +38,10 @@ git.ItemCorner.CornerRadius = UDim.new(0, 4)
 git.ItemCorner.Name = "ItemCorner"
 git.ItemCorner.Parent = git.ItemFrame
 
+game:GetService("ReplicatedStorage").Events.Auctions.UpdateCurrentBid.OnClientEvent:Connect(function(amount)
+    getgenv().NextBid = amount
+end)
+
+git.NextBid = getgenv().NextBid
+
 return git
