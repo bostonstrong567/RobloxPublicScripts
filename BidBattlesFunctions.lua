@@ -42,6 +42,6 @@ game:GetService("ReplicatedStorage").Events.Auctions.UpdateCurrentBid.OnClientEv
     getgenv().NextBid = amount
 end)
 
-git.NextBid = getgenv().NextBid.nextBid
+git.NextBid = getgenv().NextBid
 
 return git
