@@ -150,7 +150,8 @@ end
 MiscSection:addToggle({
 title = "Auto Buy Pickaxes",
 callback = function(value)
-_G.autoRebirth = value
+_G.autoBuyPick = value
+
 while _G.autoBuyPick do task.wait(1)
     if _G.autoBuyPick then
         for i, pick in pairs(picks.picks) do
