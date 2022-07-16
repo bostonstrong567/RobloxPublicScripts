@@ -7,6 +7,7 @@ local player = game.Players.LocalPlayer
 local character = player.Character
 local inventoryCon = require(game:GetService("ReplicatedStorage").Modules.inventoryController)
 local mod = require(game:GetService("ReplicatedStorage").Modules.statModule)
+local picks = require(game:GetService("ReplicatedStorage").Modules.pickaxesModule)
 
 local pets = {
 "Starter Egg",
@@ -143,5 +144,19 @@ _G.autoRebirth = value
         game:GetService("ReplicatedStorage").Remotes.Rebirth:FireServer()
     end
 end
+end
+})
+
+MiscSection:addToggle({
+title = "Auto Rebirth",
+callback = function(value)
+_G.autoRebirth = value
+while _G.autoBuyPick do task.wait(1)
+    if _G.autoBuyPick then
+        for i, pick in pairs(picks.picks) do
+            game:GetService("ReplicatedStorage").Remotes.BuyPickaxe:InvokeServer(i)
+        end
+    end
+    end
 end
 })
