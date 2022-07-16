@@ -75,11 +75,9 @@ toolsSection:addToggle({
         _G.toggleClick = value
         
         while _G.toggleClick do task.wait()
-            task.spawn(function()
-                if _G.toggleClick then
-                    game:GetService("ReplicatedStorage").Remotes.Click:InvokeServer()
-                end
-            end)
+            if _G.toggleClick then
+                game:GetService("ReplicatedStorage").Remotes.Click:InvokeServer()
+            end
         end
     end
 })
@@ -88,6 +86,7 @@ EggsSection:addToggle({
     title = "Auto Purchase Eggs",
     callback = function(value)
         _G.toggleAutoBuyEgg = value
+                        
         while _G.toggleAutoBuyEgg do task.wait(0.1)
             if _G.toggleAutoBuyEgg then
                 game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(_G.SelectedPet, 1)
@@ -107,6 +106,7 @@ EggsSection:addDropdown({
 PetsSection:addToggle({
     title = "Auto Equip Best Pets",
     callback = function(value)
+                        
         _G.equipBest = value
         while _G.equipBest do task.wait(1)
             if _G.equipBest then
