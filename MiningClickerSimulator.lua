@@ -148,7 +148,7 @@ end
 })
 
 MiscSection:addToggle({
-title = "Auto Rebirth",
+title = "Auto Buy Pickaxes",
 callback = function(value)
 _G.autoRebirth = value
 while _G.autoBuyPick do task.wait(1)
