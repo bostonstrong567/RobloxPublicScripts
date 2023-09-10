@@ -151,6 +151,7 @@ local function miningMain()
         task.wait()
     end
 end
+
 -- Function to Equip All Combat Tools
 local function equipAllCombatTools()
     if not player.Character or not player.Backpack then
@@ -198,11 +199,10 @@ local function manageHitRegistration()
             end)
         end
 
-        task.wait(0.5) -- Adjust the wait time as necessary
+        task.wait(0.5)
     end
 end
 
--- Function to Handle Player Character Addition
 local function onPlayerCharacterAdded(character)
     task.wait(0.5)
     if isMining then
