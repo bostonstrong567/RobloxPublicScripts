@@ -2,8 +2,8 @@
 
 --Settings:
 
-_G.RemoteFunction = true;
-_G.RemoteEvent = true;
+_G.RemoteFunction = true
+_G.RemoteEvent = true
 _G.BindableFunction = false;
 _G.BindableEvent = false;
 
@@ -12,7 +12,7 @@ _G.BindableEvent = false;
 loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/bostonstrong567/Roblox-Tools/refs/heads/main/Mr.%20Spy%20Reloaded"))()
                                                                                                                                          --[[
 
-  .     '     ,             ____             __                   __                         ________________
+  .     '     ,            ____             __                   __                         ________________
     _________             / __ )____  _____/ /_____  ____  _____/ /__________  ____  ____ _/ ____/ ___/__  /
  _ /_|_____|_\ _        / __  / __ \/ ___/ __/ __ \/ __ \/ ___/ __/ ___/ __ \/ __ \/ __ `/___ \/ __ \  / /
    '. \   / .'        / /_/ / /_/ (__  ) /_/ /_/ / / / (__  ) /_/ /  / /_/ / / / / /_/ /___/ / /_/ / / /
