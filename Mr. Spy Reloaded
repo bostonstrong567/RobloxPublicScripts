@@ -2,8 +2,8 @@
 
 --Settings:
 
-_G.RemoteFunction = true
-_G.RemoteEvent = true
+_G.RemoteFunction = true;
+_G.RemoteEvent = true;
 _G.BindableFunction = false;
 _G.BindableEvent = false;
 
